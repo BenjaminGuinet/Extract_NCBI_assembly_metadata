@@ -11,7 +11,11 @@ GCA_022132215.1
 GCA_007725185.1
 ```
 
-It can also download the assemblies.
+It can also download the assemblies if you set the option ```-d True```
+
+Prior running the script, you will need ```NCBI-datasets```
+
+In UPPMAX it can be loaded with : ```module load NCBI-datasets/15.29.0```
 
 # Usage example :
 
