@@ -14,3 +14,12 @@ It can also download the assemblies.
 
 * Will create a table called ***Genome_metadata.csv*** directed to the directory ***/crex/Test_folder/test***
 * Will download all the assembly fasta files directed to the directory ***/crex/Test_folder/test***
+
+
+With the 3 accessions, the Genome_detadata.csv should look like that :
+```
+        Accessions            Path    geographic location                host isolation source  strain     BioSample Taxonomy                      Organism Supressed    sample type
+0  GCA_023650665.1  Not downloaded      Germany:magdeburg        Homo_sapiens       wound swab  319078  SAMN28202791     1648  Erysipelothrix rhusiopathiae        NO        Missing
+1  GCA_022132215.1  Not downloaded        Usa:orangebeach  Tursiops_truncatus    dolphin brain  10DISL  SAMN23594042     1648  Erysipelothrix rhusiopathiae        NO  tissue sample
+2  GCA_007725185.1  Not downloaded  China:sichuanprovince                 Pig          missing      ZJ  SAMN12347781     1648  Erysipelothrix rhusiopathiae        NO        Missing
+```
