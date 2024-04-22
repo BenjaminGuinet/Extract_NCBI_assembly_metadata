@@ -2,6 +2,15 @@
 
 This script will download metadata from a table with assembly accession numbers.
 
+This table should look like (file provided) : 
+
+```
+Accessions
+GCA_023650665.1
+GCA_022132215.1
+GCA_007725185.1
+```
+
 It can also download the assemblies.
 
 # Usage example :
