@@ -36,3 +36,6 @@ With the 3 accessions, the Genome_detadata.csv should look like that :
 1  GCA_022132215.1  Not downloaded        Usa:orangebeach  Tursiops_truncatus    dolphin brain  10DISL  SAMN23594042     1648  Erysipelothrix rhusiopathiae        NO  tissue sample
 2  GCA_007725185.1  Not downloaded  China:sichuanprovince                 Pig          missing      ZJ  SAMN12347781     1648  Erysipelothrix rhusiopathiae        NO        Missing
 ```
+This code also works for Genbank accessions : 
+
+```Download_Genbank_assemblies_metadata.py -t Accession_table.txt  -o .```
