@@ -29,6 +29,18 @@ def fetch_metadata(accession_numbers):
             metadata.append(meta_info)
         except Exception as e:
             print(f"Error fetching {acc}: {e}")
+            # Add a row with "DNA" for missing metadata but include accession in metadata table
+            meta_info = {
+                "Accession": acc,
+                "Organism": "DNA",
+                "Definition": "DNA",
+                "Length": "DNA",
+                "Source": "DNA",
+                "Collection Date": "DNA",
+                "Isolation Source": "DNA",
+                "Geo Location": "DNA"
+            }
+            metadata.append(meta_info)
     return metadata
 
 def save_metadata(metadata, output_dir):
