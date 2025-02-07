@@ -37,7 +37,7 @@ def save_metadata(metadata, output_dir):
     
     with open(output_file, "w", newline="") as csvfile:
         fieldnames = ["Accession", "Organism", "Definition", "Length", "Source", "Collection Date", "Isolation Source", "Geo Location"]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=';')
         writer.writeheader()
         writer.writerows(metadata)
     
