@@ -8,14 +8,14 @@ def read_accessions(file_path):
     with open(file_path, "r") as f:
         return [line.strip() for line in f.readlines()[1:] if line.strip()]
 
-def fetch_metadata(accession_numbers):
+def fetch_metadata(accession_numbers, db_type):
     metadata = []
     for acc in tqdm(accession_numbers, desc="Fetching metadata", unit="accession"):
         try:
-            handle = Entrez.efetch(db="nucleotide", id=acc, rettype="gb", retmode="text")
+            handle = Entrez.efetch(db=db_type, id=acc, rettype="gb", retmode="text")
             record = SeqIO.read(handle, "genbank")
             handle.close()
-            
+
             meta_info = {
                 "Accession": record.id,
                 "Organism": record.annotations.get("organism", "N/A"),
@@ -46,25 +46,26 @@ def fetch_metadata(accession_numbers):
 def save_metadata(metadata, output_dir):
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, "metadata.csv")
-    
+
     with open(output_file, "w", newline="") as csvfile:
         fieldnames = ["Accession", "Organism", "Definition", "Length", "Source", "Collection Date", "Isolation Source", "Geo Location"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=';')
         writer.writeheader()
         writer.writerows(metadata)
-    
+
     print(f"Metadata saved to {output_file}")
 
 def main():
     parser = argparse.ArgumentParser(description="Fetch metadata for a list of GenBank accession numbers.")
     parser.add_argument("-t", "--accessions", required=True, help="Text file containing GenBank accession numbers with a header 'Accessions'.")
     parser.add_argument("-o", "--output", required=True, help="Output directory for the metadata CSV file.")
-    
+    parser.add_argument("-type", "--db_type", choices=["nucleotide", "protein"], required=True, help="Type of database to fetch metadata from (nucleotide or protein).")
+
     args = parser.parse_args()
     Entrez.email = "Benjamin.guinet95@gmail.com"  # Required by NCBI Entrez API
-    
+
     accession_numbers = read_accessions(args.accessions)
-    metadata = fetch_metadata(accession_numbers)
+    metadata = fetch_metadata(accession_numbers, args.db_type)
     save_metadata(metadata, args.output)
 
 if __name__ == "__main__":
