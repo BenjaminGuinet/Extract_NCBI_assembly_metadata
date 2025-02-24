@@ -38,4 +38,4 @@ With the 3 accessions, the Genome_detadata.csv should look like that :
 ```
 This code also works for Genbank accessions : 
 
-```Download_Genbank_assemblies_metadata.py -t Accession_table.txt  -o .```
+```Download_Genbank_assemblies_metadata.py -t Accession_table.txt  -o . -type protein/nucleotide```
