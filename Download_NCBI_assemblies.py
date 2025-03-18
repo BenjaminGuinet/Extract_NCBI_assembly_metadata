@@ -7,10 +7,9 @@ import urllib
 import gzip
 import pandas as pd 
 Entrez.email = "Benjamin.guinet95@gmail.com"
-import pysam
 from Bio import SeqIO 
 import argparse
-import math 
+
 
 def get_assembly_summary(id):
     """Get esummary for an entrez id"""
