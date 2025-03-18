@@ -15,7 +15,9 @@ It can also download the assemblies if you set the option ```-d True```
 
 Prior running the script, you will need ```NCBI-datasets```
 
-In UPPMAX it can be loaded with : ```module load NCBI-datasets/15.29.0```
+In UPPMAX it can be loaded with : 
+```module load NCBI-datasets/15.29.0```
+```module load PDC```
 
 # Usage example :
 
