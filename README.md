@@ -1,6 +1,6 @@
 # Extract_NCBI_assembly_metadata
 
-This script will download metadata from a table with assembly accession numbers.
+This script will download assemblies and metadata from a table with assembly accession numbers.
 
 This table should look like (file provided) : 
 
