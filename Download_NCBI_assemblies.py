@@ -146,7 +146,7 @@ accession_numbers = Table_with_accessions['Accessions'].tolist()
 
 
 if args.download_assemblies is True:
-        for accession in accession_number:
+        for accession in accession_numbers:
             assembly="no"
             if "GCA" in accession :
                 assembly="yes"
