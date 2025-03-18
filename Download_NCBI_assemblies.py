@@ -7,9 +7,10 @@ import urllib
 import gzip
 import pandas as pd 
 Entrez.email = "Benjamin.guinet95@gmail.com"
+import pysam
 from Bio import SeqIO 
 import argparse
-
+import math 
 
 def get_assembly_summary(id):
     """Get esummary for an entrez id"""
@@ -24,7 +25,7 @@ def get_assemblies(term, download=True, path='assemblies'):
         import subprocess
         term = re.sub(" ","",term)
         # Run this subprocess "datasets download genome accession term" to get the ftp link
-        command = f"datasets download genome accession {term}"
+        command = f"/cfs/klemming/projects/supr/snic2022-6-144/BENJAMIN/TOOLS/datasets download genome accession {term}"
         subprocess.run(command, shell=True, cwd=Output_directory)
         print(command)
         # Rename the file created "ncbi_dataset.zip" to the desired filename
