@@ -8,8 +8,10 @@ def read_accessions(file_path):
     with open(file_path, "r") as f:
         return [line.strip() for line in f.readlines()[1:] if line.strip()]
 
-def fetch_metadata(accession_numbers, db_type):
+def fetch_metadata(accession_numbers, db_type, output_dir):
     metadata = []
+    os.makedirs(output_dir, exist_ok=True)
+
     for acc in tqdm(accession_numbers, desc="Fetching metadata", unit="accession"):
         try:
             handle = Entrez.efetch(db=db_type, id=acc, rettype="gb", retmode="text")
@@ -27,6 +29,12 @@ def fetch_metadata(accession_numbers, db_type):
                 "Geo Location": record.features[0].qualifiers.get("geo_loc_name", ["N/A"])[0] if record.features else "N/A"
             }
             metadata.append(meta_info)
+
+            # Save the nucleotide sequence as a FASTA file
+            fasta_file = os.path.join(output_dir, f"{record.id}.fasta")
+            with open(fasta_file, "w") as f:
+                SeqIO.write(record, f, "fasta")
+
         except Exception as e:
             print(f"Error fetching {acc}: {e}")
             # Add a row with "DNA" for missing metadata but include accession in metadata table
@@ -44,7 +52,6 @@ def fetch_metadata(accession_numbers, db_type):
     return metadata
 
 def save_metadata(metadata, output_dir):
-    os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, "metadata.csv")
 
     with open(output_file, "w", newline="") as csvfile:
@@ -58,14 +65,14 @@ def save_metadata(metadata, output_dir):
 def main():
     parser = argparse.ArgumentParser(description="Fetch metadata for a list of GenBank accession numbers.")
     parser.add_argument("-t", "--accessions", required=True, help="Text file containing GenBank accession numbers with a header 'Accessions'.")
-    parser.add_argument("-o", "--output", required=True, help="Output directory for the metadata CSV file.")
+    parser.add_argument("-o", "--output", required=True, help="Output directory for the metadata CSV file and FASTA files.")
     parser.add_argument("-type", "--db_type", choices=["nucleotide", "protein"], required=True, help="Type of database to fetch metadata from (nucleotide or protein).")
 
     args = parser.parse_args()
     Entrez.email = "Benjamin.guinet95@gmail.com"  # Required by NCBI Entrez API
 
     accession_numbers = read_accessions(args.accessions)
-    metadata = fetch_metadata(accession_numbers, args.db_type)
+    metadata = fetch_metadata(accession_numbers, args.db_type, args.output)
     save_metadata(metadata, args.output)
 
 if __name__ == "__main__":
